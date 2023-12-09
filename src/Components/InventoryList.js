@@ -8,7 +8,7 @@ function InventoryList(props) {
         <React.Fragment>
         {props.inventoryList.map((coffeeInventory) => (
             <div key={coffeeInventory.id} onClick={() => props.onItemClick(coffeeInventory)}>
-                <img src={coffeeImage} alt="coffee bag" style={{resizeMode: 'center', height: 250, width: 300, borderRadius:20 }}/>
+                <img src={coffeeImage} alt='coffee bag' style={{resizeMode: 'center', height: 250, width: 300, borderRadius:20 }}/>
                 <h2>{coffeeInventory.name}</h2>
             </div>
         ))}

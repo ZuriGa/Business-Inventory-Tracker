@@ -1,5 +1,5 @@
 import React from 'react';
-// import {useState} from 'react';
+import {useState} from 'react';
 import NewInventoryForm from './NewInventoryForm';
 import InventoryList from './InventoryList';
 // import InventoryDetails from './InventoryDetails';
@@ -48,6 +48,19 @@ class InventoryControl extends React.Component {
             formVisibleOnPage: false
         });
     };
+
+    handleClick = () => {
+        if (this.state.selectedInventoryItem != null) {
+            this.setState({
+                formVisibleOnPage: false,
+                selectedInventoryItem: null,
+            })
+        } else {
+            this.setState(prevState => ({
+                formVisibleOnPage: !prevState.formVisibleOnPage
+            }));
+        }
+    }
     
     render() {
         const { mainCoffeeList, selectedInventoryItem, formVisibleOnPage }= this.state;

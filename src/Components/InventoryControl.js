@@ -2,7 +2,7 @@ import React from 'react';
 import {useState} from 'react';
 import NewInventoryForm from './NewInventoryForm';
 import InventoryList from './InventoryList';
-// import InventoryDetails from './InventoryDetails';
+import InventoryDetails from './InventoryDetails';
 
 const coffeeInventory = [
     {
@@ -11,6 +11,8 @@ const coffeeInventory = [
         price: '$17.00',
         roast: 'Light roast',
         size: '1lb',
+        Quantity: 130,
+        poundsLeft: 130,
         id: '0'
         
     },
@@ -20,6 +22,8 @@ const coffeeInventory = [
         price: '$19.00',
         roast: 'Medium roast',
         size: '1lb',
+        Quantity: 130,
+        poundsLeft: 130,
         id: '1'
     },
     {
@@ -27,6 +31,8 @@ const coffeeInventory = [
         origin: 'Colombia',
         price: '$18.00',
         roast: '1lb',
+        Quantity: 130,
+        poundsLeft: 130,
         id: '2'
     },
 ];
@@ -61,6 +67,22 @@ class InventoryControl extends React.Component {
             }));
         }
     }
+
+    handleChangingSelectedCoffee = (id) => {
+        const selectedCoffee = this.state.mainCoffeeList.find(coffee => coffee.id === id);
+        this.setState({ selectedInventoryItem: selectedCoffee });
+    }
+
+    handleSellCoffee = () => {
+        const { selectedInventoryItem, mainCoffeeList } = this.state;
+        const updatedInventory = mainCoffeeList.map((coffee) => coffee.id ===selectedInventoryItem.id ? {...coffee, poundsLeft: Math.max(0, coffee.poundsLeft - 1) } 
+        : coffee 
+        );
+        this.setState({
+            mainCoffeeList: updatedInventory,
+            selectedInventoryItem: {...selectedInventoryItem, poundsLeft: Math.max(0, selectedInventoryItem.poundsLeft - 1) },
+        });
+    };
     
     render() {
         const { mainCoffeeList, selectedInventoryItem, formVisibleOnPage }= this.state;
@@ -68,6 +90,13 @@ class InventoryControl extends React.Component {
 
         if (formVisibleOnPage) {
             currentlyVisibleState = <NewInventoryForm onNewInventoryCreation={this.handleAddingNewInventoryToList} />;
+        } else if (selectedInventoryItem) {
+            currentlyVisibleState = (
+                <InventoryDetails
+                coffee={selectedInventoryItem}
+                onSellPound={this.handleSellPound}
+                />
+            );
         } else {
             currentlyVisibleState = (
                 <InventoryList
@@ -79,10 +108,12 @@ class InventoryControl extends React.Component {
             );
         }
         
+        
 
         return (
             <React.Fragment>
                 {currentlyVisibleState}
+                
             </React.Fragment>
         );
     }

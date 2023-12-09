@@ -2,7 +2,8 @@ import React from 'react';
 import Header from './Header';
 import InventoryControl from './InventoryControl';
 
-function App() {
+
+function App(){
     return(
         <React.Fragment>
             <Header />
@@ -10,3 +11,5 @@ function App() {
         </React.Fragment>
     );
 }
+
+export default App;

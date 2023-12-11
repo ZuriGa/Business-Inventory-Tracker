@@ -11,7 +11,7 @@ const coffeeInventory = [
         price: '$17.00',
         roast: 'Light roast',
         size: '1 lb',
-        quantity: 130,
+        flavor: 'Our Costa Rica coffee is a delicate showing with bright notes of bergamot and lemongrass.' ,
         poundsLeft: 130,
         id: '0'
 
@@ -22,7 +22,7 @@ const coffeeInventory = [
         price: '$19.00',
         roast: 'Medium roast',
         size: '1 lb',
-        quantity: 130,
+        flavor: 'Our Organic House blend balances mild acidity, medium body, and walnut flavor notes in perfect harmony.',
         poundsLeft: 130,
         id: '1'
     },
@@ -32,7 +32,7 @@ const coffeeInventory = [
         price: '$18.00',
         roast: 'Dark roast',
         size: '1 lb',
-        quantity: 130,
+        flavor: 'Our Espresso Roast blend has a big, heavy body that acts as a foundation for its earthy, sweet flavors and complex finish.',
         poundsLeft: 130,
         id: '2'
     },
@@ -78,7 +78,7 @@ class InventoryControl extends React.Component {
         .concat(coffeeToEdit);
         this.setState({
             mainCoffeeList: editedMainCoffeeList,
-            editing: false, 
+            editing: true, 
             selectedInventoryItem: null,
         });
     }
@@ -142,9 +142,7 @@ class InventoryControl extends React.Component {
         return (
             <React.Fragment>
                 {currentlyVisibleState}
-                {/* <InventoryList
-                    inventoryList={this.state.mainCoffeeList}
-                    onCoffeeSelection={this.handleChangingSelectedCoffee}/> */}
+                
                 <button onClick={this.handleClick}>{buttonText}</button>
             </React.Fragment>
         );

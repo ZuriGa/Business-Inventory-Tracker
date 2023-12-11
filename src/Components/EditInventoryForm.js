@@ -6,14 +6,15 @@ import { v4 } from 'uuid';
 function EditInventoryForm (props) {
     const { coffee } = props;
 
-    function handleEditInventoryFormSubmission(event) {
+    function handleFormSubmission(event) {
         event.preventDefault();
-        props.onEditCoffee({
-            name: event.target.names.value,
+        props.onEditCoffeeSubmission({
+            name: event.target.name.value,
             origin: event.target.origin.value,
-            price: event.target.price.value,
+            price: parseFloat(event.target.price.value),
             roast: event.target.roast.value,
-            quantity: parseInt(event.target.quantity.value),
+            quantity: parseInt(event.target.poundsLeft.value),
+            flavor: event.target.flavor.value,
             id: v4()
         });
     }
@@ -21,7 +22,7 @@ function EditInventoryForm (props) {
     return (
         <React.Fragment>
             <ReusableForm
-            formSubmissionHandler={handleEditInventoryFormSubmission}
+            formSubmissionHandler={handleFormSubmission}
             buttonText='Update Coffee Details' />
         </React.Fragment>
     );
@@ -29,7 +30,7 @@ function EditInventoryForm (props) {
 
 EditInventoryForm.propTypes = {
     coffee: PropTypes.object,
-    onEditCoffee: PropTypes.func
+    onEditCoffeeSubmission: PropTypes.func
 };
 
 export default EditInventoryForm;

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState } from 'react';
 import NewInventoryForm from './NewInventoryForm';
 import InventoryList from './InventoryList';
 import InventoryDetails from './InventoryDetails';
@@ -12,7 +11,7 @@ const coffeeInventory = [
         price: '$17.00',
         roast: 'Light roast',
         size: '1 lb',
-        Quantity: 130,
+        quantity: 130,
         poundsLeft: 130,
         id: '0'
 
@@ -22,8 +21,8 @@ const coffeeInventory = [
         origin: 'Guatemala',
         price: '$19.00',
         roast: 'Medium roast',
-        size: '1lb',
-        Quantity: 130,
+        size: '1 lb',
+        quantity: 130,
         poundsLeft: 130,
         id: '1'
     },
@@ -32,8 +31,8 @@ const coffeeInventory = [
         origin: 'Colombia',
         price: '$18.00',
         roast: 'Dark roast',
-        size: '1lb',
-        Quantity: 130,
+        size: '1 lb',
+        quantity: 130,
         poundsLeft: 130,
         id: '2'
     },
@@ -46,15 +45,8 @@ class InventoryControl extends React.Component {
             formVisibleOnPage: false,
             selectedInventoryItem: null,
             mainCoffeeList: coffeeInventory,
+            editing: false,
         };
-    }
-
-
-    handleHomeClick = () => {
-        this.setState({
-            formVisibleOnPage: false,
-            selectedInventoryItem: null,
-        });
     }
 
     handleAddingNewInventoryToList = (newCoffee) => {
@@ -70,23 +62,24 @@ class InventoryControl extends React.Component {
             this.setState({
                 formVisibleOnPage: false,
                 selectedInventoryItem: null,
-                editing: false
+                editing: false,
             });
         } else {
             this.setState((prevState) => ({
                 formVisibleOnPage: !prevState.formVisibleOnPage,
+                editing: false,
             }));
         }
     }
 
     handleEditingCoffeeInList = (coffeeToEdit) => {
         const editedMainCoffeeList = this.state.mainCoffeeList
-        .filter(coffee => coffee.id !== this.state.selectedInventoryItem.id)
+        .filter((coffee) => coffee.id !== this.state.selectedInventoryItem.id)
         .concat(coffeeToEdit);
         this.setState({
             mainCoffeeList: editedMainCoffeeList,
             editing: false, 
-            selectedInventoryItem: null
+            selectedInventoryItem: null,
         });
     }
 
@@ -113,7 +106,7 @@ class InventoryControl extends React.Component {
     }
 
     handleDeletingCoffee = (id) => {
-        const newMainCoffeeList = this.state.mainCoffeeList.filter(coffee => coffee.id !== id);
+        const newMainCoffeeList = this.state.mainCoffeeList.filter((coffee) => coffee.id !== id);
         this.setState({
             mainCoffeeList: newMainCoffeeList,
             selectedCoffee: null
@@ -128,24 +121,30 @@ class InventoryControl extends React.Component {
         if (this.state.editing) {
             currentlyVisibleState = <EditInventoryForm coffee = {this.state.selectedInventoryItem} 
             onEditCoffee = {this.handleEditingCoffeeInList} />
-            buttonText = "Return to List";
-        } else if (this.state.selectedInventoryItem != null) {
+            buttonText = 'Return to List';
+        } else if (this.state.selectedInventoryItem !== null) {
             currentlyVisibleState = <InventoryDetails coffee={this.state.selectedInventoryItem}
-            onClickingDelete = {this.handleDeletingCoffee} onClickingEdit = {this.handleEditClick}/>
-            buttonText = "Return to List"
+            onSellPound={this.handleSellCoffee}
+            onClickingDelete = {this.handleDeletingCoffee} 
+            onClickingEdit = {this.handleEditingCoffeeInList}/>
+            buttonText = 'Return to List';
         } else if (this.state.formVisibleOnPage) {
             currentlyVisibleState = <NewInventoryForm onNewInventoryCreation={this.handleAddingNewInventoryToList} />;
-            buttonText = "Return to List";
+            buttonText = 'Return to List';
         } else {
             currentlyVisibleState =
                 <InventoryList
                     inventoryList={this.state.mainCoffeeList}
                     onCoffeeSelection={this.handleChangingSelectedCoffee} />;
+                    buttonText = 'Add New Coffee';
         }
 
         return (
             <React.Fragment>
                 {currentlyVisibleState}
+                {/* <InventoryList
+                    inventoryList={this.state.mainCoffeeList}
+                    onCoffeeSelection={this.handleChangingSelectedCoffee}/> */}
                 <button onClick={this.handleClick}>{buttonText}</button>
             </React.Fragment>
         );

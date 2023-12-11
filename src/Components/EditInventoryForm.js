@@ -1,6 +1,7 @@
 import React from 'react';
 import ReusableForm from './ReusableForm';
 import PropTypes from 'prop-types';
+import { v4 } from 'uuid';
 
 function EditInventoryForm (props) {
     const { coffee } = props;
@@ -13,7 +14,7 @@ function EditInventoryForm (props) {
             price: event.target.price.value,
             roast: event.target.roast.value,
             quantity: parseInt(event.target.quantity.value),
-            id: coffee.id
+            id: v4()
         });
     }
     
@@ -26,7 +27,7 @@ function EditInventoryForm (props) {
     );
 }
 
-EditInventoryForm.prototype = {
+EditInventoryForm.propTypes = {
     coffee: PropTypes.object,
     onEditCoffee: PropTypes.func
 };

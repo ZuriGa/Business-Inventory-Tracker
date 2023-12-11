@@ -21,8 +21,8 @@ function ReusableForm(props) {
                 <input
                     type='number'
                     name='price'
-                    min="0"
-                    step="0.01"
+                    min='0'
+                    step='0.01'
                     placeholder='$0.00'
                     required={true} />
                 <label htmlFor="roast">Roast: </label>
@@ -31,7 +31,7 @@ function ReusableForm(props) {
                     name='roast'
                     placeholder='Roast level'
                     required={true} />
-                <label htmlFor="Quantity">Quantity: </label>
+                <label htmlFor='quantity'>Quantity: </label>
                 <input
                     type='number'
                     name='quantity'

@@ -8,7 +8,7 @@ function NewInventoryForm(props) {
     function handleNewInventoryFormSubmission(event) {
         event.preventDefault();
         props.onNewInventoryCreation({
-            name: event.target.names.value,
+            name: event.target.name.value,
             origin: event.target.origin.value,
             price: event.target.price.value,
             roast: event.target.roast.value,

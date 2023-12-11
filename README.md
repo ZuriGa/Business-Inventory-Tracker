@@ -38,7 +38,7 @@
 
 ## Known Bugs
 
-* _Sell button, and update button don't seem to work properly_
+* _small bug on my update coffee details button, when clicking it and clicking return to list, it will take you to another form before taking you back to the coffee list_
 
 
 ## License

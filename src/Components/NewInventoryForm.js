@@ -4,6 +4,7 @@ import { v4 } from 'uuid';
 import ReusableForm from './ReusableForm';
 
 function NewInventoryForm(props) {
+
     function handleNewInventoryFormSubmission(event) {
         event.preventDefault();
         props.onNewInventoryCreation({

@@ -21,7 +21,7 @@ function EditInventoryForm (props) {
         <React.Fragment>
             <ReusableForm
             formSubmissionHandler={handleEditInventoryFormSubmission}
-            buttonText="Update Coffee Details" />
+            buttonText='Update Coffee Details' />
         </React.Fragment>
     );
 }

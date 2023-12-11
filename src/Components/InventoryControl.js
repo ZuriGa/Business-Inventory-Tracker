@@ -66,10 +66,11 @@ class InventoryControl extends React.Component {
     }
 
     handleClick = () => {
-        if (this.state.selectedInventoryItem != null) {
+        if (this.state.selectedInventoryItem !== null) {
             this.setState({
                 formVisibleOnPage: false,
                 selectedInventoryItem: null,
+                editing: false
             });
         } else {
             this.setState((prevState) => ({
@@ -85,7 +86,7 @@ class InventoryControl extends React.Component {
         this.setState({
             mainCoffeeList: editedMainCoffeeList,
             editing: false, 
-            selectedCoffee: null
+            selectedInventoryItem: null
         });
     }
 
@@ -111,7 +112,7 @@ class InventoryControl extends React.Component {
         });
     }
 
-    handleDeletingTicket = (id) => {
+    handleDeletingCoffee = (id) => {
         const newMainCoffeeList = this.state.mainCoffeeList.filter(coffee => coffee.id !== id);
         this.setState({
             mainCoffeeList: newMainCoffeeList,
@@ -121,46 +122,31 @@ class InventoryControl extends React.Component {
 
 
     render() {
-        const { mainCoffeeList, selectedInventoryItem, formVisibleOnPage } = this.state;
-        let currentlyVisibleState = (
-            <InventoryDetails
-            coffee={selectedInventoryItem}
-            onSellPound={this.handleSellCoffee}
-            />
-        );
+        let currentlyVisibleState = null;
+        let buttonText = null;
 
         if (this.state.editing) {
             currentlyVisibleState = <EditInventoryForm coffee = {this.state.selectedInventoryItem} 
             onEditCoffee = {this.handleEditingCoffeeInList} />
-            // buttonText = "Return to Inventory";
-        } else if (formVisibleOnPage) {
-            currentlyVisibleState = (
-            <NewInventoryForm onNewInventoryCreation={this.handleAddingNewInventoryToList} />
-            );
-        } else if (selectedInventoryItem) {
-            currentlyVisibleState = (
-                <InventoryDetails
-                    coffee={selectedInventoryItem}
-                    onSellPound={this.handleSellCoffee}
-                />
-            );
+            buttonText = "Return to List";
+        } else if (this.state.selectedInventoryItem != null) {
+            currentlyVisibleState = <InventoryDetails coffee={this.state.selectedInventoryItem}
+            onClickingDelete = {this.handleDeletingCoffee} onClickingEdit = {this.handleEditClick}/>
+            buttonText = "Return to List"
+        } else if (this.state.formVisibleOnPage) {
+            currentlyVisibleState = <NewInventoryForm onNewInventoryCreation={this.handleAddingNewInventoryToList} />;
+            buttonText = "Return to List";
         } else {
-            currentlyVisibleState = (
+            currentlyVisibleState =
                 <InventoryList
-                    inventoryList={mainCoffeeList}
-                    onItemClick={(selectedInventoryItem) => {
-                        this.setState({ selectedInventoryItem });
-                    }}
-                />
-            );
+                    inventoryList={this.state.mainCoffeeList}
+                    onCoffeeSelection={this.handleChangingSelectedCoffee} />;
         }
-
-
 
         return (
             <React.Fragment>
                 {currentlyVisibleState}
-                <button onClick={this.handleHomeClick}>Home</button>
+                <button onClick={this.handleClick}>{buttonText}</button>
             </React.Fragment>
         );
     }

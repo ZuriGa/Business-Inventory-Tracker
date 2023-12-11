@@ -4,15 +4,6 @@ import PropTypes from 'prop-types';
 function InventoryDetails(props) {
     const { coffee, onSellPound, onClickingDelete, onClickingEdit } = props;
     
-    const handleSellCoffee = () => {
-        if (coffee.quantity > 0) {
-        const updatedCoffee = {
-            ...coffee,
-            quantity: (coffee.quantity === 0) ? 0: coffee.quantity - 1
-        };
-        onSellPound(updatedCoffee)
-    }
-};
     
     const isOutOfStock = coffee && coffee.poundsLeft <= 0 ;
     

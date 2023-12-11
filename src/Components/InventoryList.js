@@ -19,7 +19,6 @@ function InventoryList(props) {
 
 InventoryList.propTypes = {
     inventoryList: PropTypes.array,
-    name: PropTypes.string,
     onItemClick: PropTypes.func.isRequired,
 
 }

@@ -34,7 +34,7 @@ function ReusableForm(props) {
                 <label htmlFor="Quantity">Quantity: </label>
                 <input
                     type='number'
-                    name='roast'
+                    name='quantity'
                     placeholder='How many burlap sacks?'
                     required={true} /> 
                 <button type='submit'>{props.buttonText}</button>

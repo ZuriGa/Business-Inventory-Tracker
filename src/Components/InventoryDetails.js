@@ -7,8 +7,21 @@ function InventoryDetails(props) {
     const [quantity, setQuantity] = useState(coffee.quantity);
 
     useEffect(() => {
-        setQuantity(coffee.quantity);
+        setQuantity(coffee.Quantity);
     }, [coffee]);
+
+    let content;
+    if (quantity > 0) {
+        content = (
+            <div>
+                <h3>Remaining Pounds: {quantity} </h3>
+                <button onClick={onSellPound}>Sell 1 Pound</button>
+            </div>
+        );
+    } else {
+        content = <h3>Quantity: {quantity}</h3>;
+    }
+
 
     return (
         <div>
@@ -17,14 +30,8 @@ function InventoryDetails(props) {
                 <h3>Origin: {coffee.origin}</h3>
                 <h3>Price: {coffee.price}</h3>
                 <h3>Roast: {coffee.roast}</h3>
-                {quantity > 0 ? (
-                    <div>
-                    <h3>Remaining Pounds: {quantity} </h3>
-                    <button onClick={onSellPound}>Sell 1 Pound</button>
-                    </div>
-                ) : (
-                    <h3>Quantity: {quantity}</h3>
-                )}
+                <h3>Size: {coffee.size}</h3>
+                {content}
             </div>
         </div>
     );

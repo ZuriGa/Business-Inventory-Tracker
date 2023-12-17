@@ -16,7 +16,6 @@ function NewInventoryForm(props) {
             flavor: event.target.flavor.value,
             quantity: quantityValue * 130 ,
             id: v4()
-
         });
     }
 

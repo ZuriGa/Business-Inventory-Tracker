@@ -3,6 +3,7 @@ import NewInventoryForm from './NewInventoryForm';
 import InventoryList from './InventoryList';
 import InventoryDetails from './InventoryDetails';
 import EditInventoryForm from './EditInventoryForm';
+import { v4 } from 'uuid';
 
 const coffeeInventory = [
     {
@@ -10,7 +11,6 @@ const coffeeInventory = [
         origin: 'Costa Rica',
         price: '$17.00',
         roast: 'Light roast',
-        size: '1 lb',
         flavor: 'Our Costa Rica coffee is a delicate showing with bright notes of bergamot and lemongrass.' ,
         poundsLeft: 130,
         id: '0'
@@ -21,7 +21,6 @@ const coffeeInventory = [
         origin: 'Guatemala',
         price: '$19.00',
         roast: 'Medium roast',
-        size: '1 lb',
         flavor: 'Our Organic House blend balances mild acidity, medium body, and walnut flavor notes in perfect harmony.',
         poundsLeft: 130,
         id: '1'
@@ -31,7 +30,6 @@ const coffeeInventory = [
         origin: 'Colombia',
         price: '$18.00',
         roast: 'Dark roast',
-        size: '1 lb',
         flavor: 'Our Espresso Roast blend has a big, heavy body that acts as a foundation for its earthy, sweet flavors and complex finish.',
         poundsLeft: 130,
         id: '2'
@@ -50,7 +48,12 @@ class InventoryControl extends React.Component {
     }
 
     handleAddingNewInventoryToList = (newCoffee) => {
-        const newInventory = this.state.mainCoffeeList.concat(newCoffee);
+        const newInventoryItem = {
+            ...newCoffee,
+            poundsLeft: newCoffee.quantity,
+            id: v4()
+        };
+        const newInventory = this.state.mainCoffeeList.concat(newInventoryItem);
         this.setState({
             mainCoffeeList: newInventory,
             formVisibleOnPage: false
@@ -72,13 +75,20 @@ class InventoryControl extends React.Component {
         }
     }
 
-    handleEditingCoffeeInList = (coffeeToEdit) => {
-        const editedMainCoffeeList = this.state.mainCoffeeList
-        .filter((coffee) => coffee.id !== this.state.selectedInventoryItem.id)
-        .concat(coffeeToEdit);
+    handleEditingCoffeeInList = () => {
+    this.setState({
+        editing: true,
+    });
+
+    }
+
+    handleUpdatingCoffeeList = (updatedCoffee) => {
+        const updatedMainCoffeeList = this.state.mainCoffeeList.map((coffee) =>
+        coffee.id === updatedCoffee.id ? updatedCoffee: coffee
+        );
         this.setState({
-            mainCoffeeList: editedMainCoffeeList,
-            editing: true, 
+            mainCoffeeList: updatedMainCoffeeList,
+            editing: false, 
             selectedInventoryItem: null,
         });
     }
@@ -90,19 +100,21 @@ class InventoryControl extends React.Component {
 
     handleSellCoffee = () => {
         const { selectedInventoryItem, mainCoffeeList } = this.state;
-        const updatedInventory = mainCoffeeList.map((coffee) => {
-            if (coffee.id === selectedInventoryItem.id) {
-                return { ...coffee, poundsLeft: Math.max(0, coffee.poundsLeft - 1) };
-            } else {
-                return coffee;
-            }
-        });
-        const updatedPoundsLeft = Math.max(0, selectedInventoryItem.poundsLeft - 1);
 
+        if (selectedInventoryItem && selectedInventoryItem.poundsLeft > 0 ) {
+            const updatedInventory = mainCoffeeList.map((coffee) => {
+                if (coffee.id === selectedInventoryItem.id) {
+                    return {...coffee, poundsLeft: coffee.poundsLeft - 1 };
+                } else {
+                    return coffee;
+                }
+            });
         this.setState({
             mainCoffeeList: updatedInventory,
-            selectedInventoryItem: { ...selectedInventoryItem, poundsLeft: updatedPoundsLeft },
+            selectedInventoryItem: { ...selectedInventoryItem, poundsLeft: selectedInventoryItem.poundsLeft - 1 },
         });
+    }
+    
     }
 
     handleDeletingCoffee = (id) => {
@@ -120,7 +132,7 @@ class InventoryControl extends React.Component {
 
         if (this.state.editing) {
             currentlyVisibleState = <EditInventoryForm coffee = {this.state.selectedInventoryItem} 
-            onEditCoffee = {this.handleEditingCoffeeInList} />
+            onEditCoffee = {this.handleUpdatingCoffeeList} />
             buttonText = 'Return to List';
         } else if (this.state.selectedInventoryItem !== null) {
             currentlyVisibleState = <InventoryDetails coffee={this.state.selectedInventoryItem}

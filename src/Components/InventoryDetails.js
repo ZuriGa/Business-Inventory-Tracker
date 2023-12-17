@@ -19,7 +19,6 @@ function InventoryDetails(props) {
                     <h3>Origin: {coffee.origin}</h3>
                     <h3>Price: {coffee.price}</h3>
                     <h3>Roast: {coffee.roast}</h3>
-                    <h3>Size: {coffee.size}</h3>
                     <h3>Quantity: {coffee.poundsLeft}</h3>
                     <h3><em>{coffee.flavor}</em></h3>
                     <button onClick={onSellPound} disabled={isOutOfStock}>Sell 1 lb</button>

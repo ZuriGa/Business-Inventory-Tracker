@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function ReusableForm(props) {
-
     return (
         <React.Fragment>
             <form onSubmit={props.formSubmissionHandler}>
@@ -10,41 +9,35 @@ function ReusableForm(props) {
                 <input
                     type='text'
                     name='name'
-                    placeholder='Name'
-                    required={true} />
+                    placeholder='Name' />
                 <label htmlFor="origin">Origin: </label>
                 <input
                     type='text'
                     name='origin'
-                    placeholder='Origin'
-                    required={true} />
+                    placeholder='Origin' />
                 <label htmlFor="price">Price: </label>
                 <input
                     type='number'
                     name='price'
-                    placeholder='$0.00'
-                    required={true} />
+                    placeholder='$0.00' />
                 <label htmlFor="roast">Roast: </label>
                 <input
                     type='text'
                     name='roast'
-                    placeholder='Roast level'
-                    required={true} />
+                    placeholder='Roast level' />
                 <label htmlFor='quantity'>Quantity: </label>
                 <input
                     type='number'
                     name='quantity'
-                    placeholder='How many burlap sacks?'
-                    required={true} /> 
+                    placeholder='How many burlap sacks?' /> 
                 <label htmlFor='flavor'>Flavor: </label>
-                <input
-                    type='textarea'
+                <textarea
                     name='flavor'
                     placeholder='Enter flavor notes' /> 
                 <button type='submit'>{props.buttonText}</button>
             </form>
         </React.Fragment>
-    )
+    );
 }
 
 ReusableForm.propTypes = {

@@ -38,7 +38,7 @@
 
 ## Known Bugs
 
-* _small bug on my update coffee details button, when clicking it and clicking return to list, it will take you to another form before taking you back to the coffee list_
+* _No known bugs_
 
 
 ## License
